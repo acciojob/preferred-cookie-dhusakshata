@@ -1,4 +1,3 @@
-//your JS code here. If required.
 // Get the form element
 const form = document.querySelector('form');
 
@@ -26,6 +25,22 @@ function getCookie(name) {
   return '';
 }
 
+// Function to apply user preferences
+function applyUserPreferences() {
+  const savedFontSize = getCookie('fontsize');
+  const savedFontColor = getCookie('fontcolor');
+
+  if (savedFontSize) {
+    document.documentElement.style.setProperty('--fontsize', savedFontSize);
+    document.getElementById('fontsize').value = parseInt(savedFontSize);
+  }
+
+  if (savedFontColor) {
+    document.documentElement.style.setProperty('--fontcolor', savedFontColor);
+    document.getElementById('fontcolor').value = savedFontColor;
+  }
+}
+
 // Function to handle form submission
 function handleFormSubmit(event) {
   event.preventDefault();
@@ -45,19 +60,8 @@ function handleFormSubmit(event) {
   setCookie('fontcolor', fontColor, 30);
 }
 
-// Fill form inputs with stored preferences on page load
-window.addEventListener('load', () => {
-  const savedFontSize = getCookie('fontsize');
-  const savedFontColor = getCookie('fontcolor');
-
-  if (savedFontSize) {
-    document.getElementById('fontsize').value = parseInt(savedFontSize);
-  }
-
-  if (savedFontColor) {
-    document.getElementById('fontcolor').value = savedFontColor;
-  }
-});
-
 // Attach form submission handler
 form.addEventListener('submit', handleFormSubmit);
+
+// Apply user preferences on page load
+applyUserPreferences();
